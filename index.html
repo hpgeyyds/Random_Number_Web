@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>随机数生成器 - 在线版</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- 手机端推广横幅 -->
+    <div id="mobile-promo" class="mobile-promo hidden">
+        <div class="promo-content">
+            <span class="material-symbols-outlined promo-icon">casino</span>
+            <div class="promo-text">
+                <span class="promo-title">随机数生成器 App</span>
+                <span class="promo-desc">体验更流畅的本地应用</span>
+            </div>
+            <a href="https://github.com/hpgeyyds/Random_Number/releases" class="promo-btn" target="_blank">下载</a>
+            <button class="promo-close" onclick="closePromo()">
+                <span class="material-symbols-outlined">close</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- 顶部导航 -->
+    <nav class="app-bar">
+        <div class="app-bar-content">
+            <span class="material-symbols-outlined app-icon">casino</span>
+            <h1 class="app-title">随机数生成器</h1>
+            <a href="https://github.com/hpgeyyds/Random_Number" class="github-link" target="_blank" title="GitHub 仓库">
+                <svg class="github-icon" viewBox="0 0 24 24" width="24" height="24">
+                    <path fill="currentColor" d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.008-.866-.013-1.7-2.782.603-3.369-1.341-3.369-1.341-.455-1.157-1.11-1.465-1.11-1.465-.908-.62.069-.608.069-.608 1.003.071 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.831.092-.646.35-1.086.636-1.336-2.22-.251-4.555-1.111-4.555-4.943 0-1.091.39-1.984 1.029-2.683C6.546 8.54 6.202 7.524 6.746 6.147c0 0 .84-.269 2.75 1.025.798-.222 1.653-.333 2.504-.337.85.004 1.705.115 2.504.337 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.203 2.393.1 2.643.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.163 22 16.418 22 12c0-5.523-4.477-10-10-10z"/>
+                </svg>
+            </a>
+        </div>
+    </nav>
+
+    <!-- 主内容区 -->
+    <main class="main-content">
+        <!-- 结果卡片 -->
+        <div class="card result-card">
+            <div class="card-content">
+                <span class="result-label">随机结果</span>
+                <div id="result" class="result-value">?</div>
+            </div>
+        </div>
+
+        <!-- 范围设置卡片 -->
+        <div class="card">
+            <div class="card-content">
+                <h2 class="card-title">数值范围</h2>
+                <div class="range-inputs">
+                    <div class="input-field">
+                        <label class="input-label">最小值</label>
+                        <input type="number" id="minValue" value="1" class="text-field">
+                    </div>
+                    <span class="range-separator">~</span>
+                    <div class="input-field">
+                        <label class="input-label">最大值</label>
+                        <input type="number" id="maxValue" value="100" class="text-field">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 快速选择卡片 -->
+        <div class="card">
+            <div class="card-content">
+                <h2 class="card-title">快速选择</h2>
+                <div class="quick-chips">
+                    <button class="chip" onclick="setRange(1, 10)">1-10</button>
+                    <button class="chip" onclick="setRange(1, 100)">1-100</button>
+                    <button class="chip" onclick="setRange(1, 1000)">1-1000</button>
+                    <button class="chip" onclick="setRange(1, 6)">🎲 1-6</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 操作按钮 -->
+        <button id="generateBtn" class="btn btn-filled btn-large" onclick="toggleGeneration()">
+            <span class="material-symbols-outlined btn-icon">play_arrow</span>
+            <span id="btnText">开始抽取</span>
+        </button>
+
+        <button class="btn btn-outlined btn-large" onclick="copyResult()">
+            <span class="material-symbols-outlined btn-icon">content_copy</span>
+            复制结果
+        </button>
+
+        <!-- 历史记录卡片 -->
+        <div class="card history-card">
+            <div class="card-content">
+                <div class="history-header">
+                    <h2 class="card-title">历史记录</h2>
+                    <button class="btn-text" onclick="clearHistory()">清空</button>
+                </div>
+                <div id="historyList" class="history-list">
+                    <div class="empty-history">暂无历史记录</div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- 页脚 -->
+    <footer class="footer">
+        <p>© 2026 核平鸽 版权所有</p>
+        <p class="footer-powered">
+            Powered by 
+            <a href="https://www.trae.ai" target="_blank">Trae</a> & 
+            <a href="https://www.moonshot.cn" target="_blank">Kimi 2.5</a>
+        </p>
+    </footer>
+
+    <!-- Toast 提示 -->
+    <div id="toast" class="toast"></div>
+
+    <script src="script.js"></script>
+</body>
+</html>
